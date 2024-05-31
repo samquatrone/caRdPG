@@ -1,176 +1,48 @@
 extends CharacterBody2D
 
-const BASE_SPEED = 100.0
+@export var speed = 100.0
 
-enum Direction {N, NE, E, SE, S, SW, W, NW}
-var direction = Direction.S
-var is_moving: bool = false
 
+@onready var anim = $AnimatedSprite2D
+@onready var stopped_moving: bool = false
+@onready var was_moving: bool = false
+@onready var direction = Vector2()
+@onready var prev_direction = Vector2()
+
+
+func _ready():
+	pass
 
 
 func _physics_process(delta):
-	player_movement(delta)
+	prev_direction = direction
+	direction = Input.get_vector("left", "right", "up", "down")
+	if direction.length() > 1.0:
+		direction = direction.normalized()
 
-func player_movement(delta):
-	var move_speed = BASE_SPEED
-	var anim = $AnimatedSprite2D
+	velocity = direction * speed
 
-	if Input.is_action_pressed("ui_up"):
-		if Input.is_action_pressed("ui_down"):
-			is_moving = false
-		elif Input.is_action_pressed("ui_left"):
-			is_moving = true
-			direction = Direction.NW
-		elif Input.is_action_pressed("ui_right"):
-			is_moving = true
-			direction = Direction.NE
-		else:
-			is_moving = true
-			direction = Direction.N
-	elif Input.is_action_pressed("ui_down"):
-		is_moving = true
-		if Input.is_action_pressed("ui_left"):
-			direction = Direction.SW
-		elif Input.is_action_pressed("ui_right"):
-			direction = Direction.SE
-		else:
-			direction = Direction.S
-	elif Input.is_action_pressed("ui_left"):
-		if Input.is_action_pressed("ui_right"):
-			is_moving = false
-		else:
-			is_moving = true
-			direction = Direction.W
-	elif Input.is_action_pressed("ui_right"):
-		is_moving = true
-		direction = Direction.E
-	else:
-		is_moving = false
-	
-	match direction:
-		Direction.N:
-			anim.flip_h = false
-			if is_moving:
-				anim.play("back_walk")
-				velocity.x = 0
-				velocity.y = -move_speed
-			else:
-				anim.play("back_idle")
-				velocity.x = 0
-				velocity.y = 0
-		Direction.S:
-			anim.flip_h = false
-			if is_moving:
-				anim.play("front_walk")
-				velocity.x = 0
-				velocity.y = move_speed
-			else:
-				anim.play("front_idle")
-				velocity.x = 0
-				velocity.y = 0
-		Direction.E:
-			anim.flip_h = false
-			if is_moving:
-				anim.play("side_walk")
-				velocity.x = move_speed
-				velocity.y = 0
-			else:
-				anim.play("side_idle")
-				velocity.x = 0
-				velocity.y = 0
-		Direction.W:
-			anim.flip_h = true
-			if is_moving:
-				anim.play("side_walk")
-				velocity.x = -move_speed
-				velocity.y = 0
-			else:
-				anim.play("side_idle")
-				velocity.x = 0
-				velocity.y = 0
-		Direction.NW:
-			if Input.is_action_just_pressed("ui_up"):
-				anim.flip_h = false
-				if is_moving:
-					anim.play("back_walk")
-					velocity.x = -70.7107
-					velocity.y = -70.7107
-				else:
-					anim.play("back_idle")
-					velocity.x = 0
-					velocity.y = 0
-			else:
-				anim.flip_h = true
-				if is_moving:
-					anim.play("side_walk")
-					velocity.x = -70.7107
-					velocity.y = -70.7107
-				else:
-					anim.play("side_idle")
-					velocity.x = 0
-					velocity.y = 0
-		Direction.NE:
-			anim.flip_h = false
-			if Input.is_action_just_pressed("ui_up"):
-				if is_moving:
-					anim.play("back_walk")
-					velocity.x = 70.7107
-					velocity.y = -70.7107
-				else:
-					anim.play("back_idle")
-					velocity.x = 0
-					velocity.y = 0
-			else:
-				if is_moving:
-					anim.play("side_walk")
-					velocity.x = 70.7107
-					velocity.y = -70.7107
-				else:
-					anim.play("side_idle")
-					velocity.x = 0
-					velocity.y = 0
-		Direction.SW:
-			if Input.is_action_just_pressed("ui_down"):
-				anim.flip_h = false
-				if is_moving:
-					anim.play("front_walk")
-					velocity.x = -70.7107
-					velocity.y = 70.7107
-				else:
-					anim.play("front_idle")
-					velocity.x = 0
-					velocity.y = 0
-			else:
-				anim.flip_h = true
-				if is_moving:
-					anim.play("side_walk")
-					velocity.x = -70.7107
-					velocity.y = 70.7107
-				else:
-					anim.play("side_idle")
-					velocity.x = 0
-					velocity.y = 0
-		Direction.SE:
-			anim.flip_h = false
-			if Input.is_action_just_pressed("ui_up"):
-				if is_moving:
-					anim.play("back_walk")
-					velocity.x = 70.7107
-					velocity.y = 70.7107
-				else:
-					anim.play("back_idle")
-					velocity.x = 0
-					velocity.y = 0
-			else:
-				if is_moving:
-					anim.play("side_walk")
-					velocity.x = 70.7107
-					velocity.y = 70.7107
-				else:
-					anim.play("side_idle")
-					velocity.x = 0
-					velocity.y = 0
-	
+	update_animation()
+
 	move_and_slide()
-	
 
+
+func update_animation():
+	if direction.length() > 0.2:
+		was_moving = true
+		anim.flip_h = direction.x < -0.5
+		if direction.y > 0.8:
+			anim.play("front_walk")
+		if direction.y < -0.8:
+			anim.play("back_walk")
+		if abs(direction.x) > 0.5:
+			anim.play("side_walk")
+	else:
+		if was_moving:
+			if prev_direction.y > 0.8:
+				anim.play("front_idle")
+			if prev_direction.y < -0.8:
+				anim.play("back_idle")
+			if abs(prev_direction.x) > 0.5:
+				anim.play("side_idle")
+		was_moving = false
