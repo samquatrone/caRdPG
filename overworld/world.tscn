@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dxngtek8al3vx"]
 
-[ext_resource type="Texture2D" uid="uid://bhl7mqhq446t2" path="res://assets/tilesets/plains.png" id="1_ybvlx"]
-[ext_resource type="Texture2D" uid="uid://bh7e58vnsx5oa" path="res://assets/tilesets/grass.png" id="2_qg01n"]
-[ext_resource type="PackedScene" uid="uid://dkjbf247etvng" path="res://scenes/player.tscn" id="3_bmwfu"]
+[ext_resource type="Texture2D" uid="uid://bhl7mqhq446t2" path="res://assets/tilesets/plains.png" id="1_jfoys"]
+[ext_resource type="Texture2D" uid="uid://bh7e58vnsx5oa" path="res://assets/tilesets/grass.png" id="2_igvrp"]
+[ext_resource type="PackedScene" uid="uid://dkjbf247etvng" path="res://overworld/player.tscn" id="3_la8vp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iiaj4"]
-texture = ExtResource("1_ybvlx")
+texture = ExtResource("1_jfoys")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -217,7 +217,7 @@ texture = ExtResource("1_ybvlx")
 5:11/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t412m"]
-texture = ExtResource("2_qg01n")
+texture = ExtResource("2_igvrp")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -236,5 +236,5 @@ layer_0/tile_data = PackedInt32Array(0, 1, 0, 65536, 1, 0, 131072, 1, 0, 196608,
 layer_1/name = "Decor"
 layer_1/tile_data = PackedInt32Array(851979, 65536, 6, 851982, 196608, 6, 851980, 131072, 6, 851981, 131072, 6, 786443, 65536, 5, 720907, 65536, 5, 655371, 65536, 5, 786446, 196608, 5, 720910, 196608, 5, 655374, 196608, 5, 786444, 131072, 5, 786445, 131072, 5, 720909, 131072, 5, 720908, 131072, 5, 655372, 131072, 5, 655373, 131072, 5)
 
-[node name="player" parent="." instance=ExtResource("3_bmwfu")]
+[node name="player" parent="." instance=ExtResource("3_la8vp")]
 position = Vector2(108, 76)

@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="Card" load_steps=2 format=3 uid="uid://10psqphtsr3o"]
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://10psqphtsr3o"]
 
+[ext_resource type="Texture2D" uid="uid://dl56i4jopfy3c" path="res://assets/cards/slime_art.png" id="1_1aw83"]
 [ext_resource type="Script" path="res://custom_resources/card.gd" id="1_ede4s"]
 
 [resource]
 script = ExtResource("1_ede4s")
-id = ""
-type = 0
-target = 0
+id = "slime"
+type = 1
+target = 3
+cost = 1
+card_art = ExtResource("1_1aw83")
+tooltip_text = ""
