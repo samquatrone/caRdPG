@@ -2,7 +2,7 @@ class_name Card
 extends Resource
 
 enum Type {SPELL, UNIT}
-enum Target {SELF, SINGLE_ALLY, ALL_ALLIES, SINGLE_ENEMY, ALL_ENEMIES, OPPONENT, EVERYONE}
+enum Target {SELF, OPPONENT, SINGLE_ALLY, SINGLE_ENEMY, SINGLE_ANY, ALL_ALLIES, ALL_ENEMIES, EVERYONE}
 
 @export_group("Card Attributes")
 @export var id: String
@@ -11,4 +11,4 @@ enum Target {SELF, SINGLE_ALLY, ALL_ALLIES, SINGLE_ENEMY, ALL_ENEMIES, OPPONENT,
 
 
 func is_single_targeted() -> bool:
-	return target == Target.SINGLE_ALLY or target == Target.SINGLE_ENEMY
+	return target == Target.SINGLE_ALLY or target == Target.SINGLE_ENEMY or target == Target.SINGLE_ANY

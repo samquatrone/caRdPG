@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_wjswu")
-id = ""
+id = "fireball"
 type = 0
-target = 0
+target = 3
