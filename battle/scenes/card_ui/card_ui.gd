@@ -63,3 +63,12 @@ func _on_drop_point_detector_area_entered(area: Area2D):
 
 func _on_drop_point_detector_area_exited(area: Area2D):
 	targets.erase(area)
+
+
+static func new(card: Card) -> CardUI:
+	var my_scene: PackedScene = load("res://battle/scenes/card_ui/card_ui.tscn")
+	var new_card: CardUI = my_scene.instantiate()
+	new_card._set_card(card)
+	
+	return new_card
+
